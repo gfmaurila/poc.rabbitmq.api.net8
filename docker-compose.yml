@@ -1,0 +1,92 @@
+version: '3.4'
+
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  poc.api.redis:
+    image: ${DOCKER_REGISTRY-}pocapiredis
+    restart: always
+    build:
+      context: .
+      dockerfile: poc.api.redis/Dockerfile
+    expose:
+      - 5074
+    ports:
+      - 5074:5074
+    links:
+      - redis
+    networks:
+      - app-network
+    depends_on:
+      - redis
+
+  poc.api.sqlserver.dapper:
+    image: ${DOCKER_REGISTRY-}pocapisqlserverdapper
+    restart: always
+    build:
+      context: .
+      dockerfile: poc.api.sqlserver.dapper/Dockerfile
+    expose:
+      - 5071
+    ports:
+      - 5071:5071
+    links:
+      - sqlserver
+      - rabbitmq 
+    networks:
+      - app-network
+    depends_on:
+      - sqlserver
+      - rabbitmq
+
+# Redis Cache Server
+  redis:
+    image: redis:latest
+    container_name: redis
+    command: redis-server --requirepass Poc2Minimal@Api
+    restart: always
+    expose:
+      - 6379
+    ports:
+      - 6379:6379
+    networks:
+      - app-network
+
+  # SQL Server
+  sqlserver:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    cap_add: [ 'SYS_PTRACE' ]
+    hostname: mssql
+    container_name: sqlserver
+    restart: always
+    expose:
+      - 1433
+    ports:
+      - 1433:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=@Poc2Minimal@Api
+    networks:
+      - app-network
+
+  # http://localhost:15672
+  # usuário guest 
+  # senha guest
+  # Rabbit MQ
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: rabbitmq
+    restart: always
+    expose:
+      - 15672
+    ports:
+        - 5672:5672
+        - 15672:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+        - app-network
+

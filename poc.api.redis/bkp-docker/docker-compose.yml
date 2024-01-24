@@ -1,0 +1,38 @@
+# version: '3.9'
+
+# networks:
+#   app-network:
+#     driver: bridge
+
+# services:
+
+#   poc.api.redis-webapi:
+#     image: ${DOCKER_REGISTRY-}poc.api.redis-webapi
+#     container_name: poc.api.redis-webapi
+#     restart: always
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     expose:
+#       - 5074
+#     ports:
+#       - 5074:5074
+#     links:
+#       - redis
+#     networks:
+#       - app-network
+#     depends_on:
+#       - redis
+      
+#   # Redis Cache Server
+#   redis:
+#     image: redis:latest
+#     container_name: redis
+#     command: redis-server --requirepass Poc2Minimal@Api
+#     restart: always
+#     expose:
+#       - 6379
+#     ports:
+#       - 6379:6379
+#     networks:
+#       - app-network

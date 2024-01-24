@@ -1,0 +1,42 @@
+# version: '3.9'
+
+# networks:
+#   app-network:
+#     driver: bridge
+
+# services:
+
+#   poc.api.sqlserver-webapi:
+#     image: ${DOCKER_REGISTRY-}poc.api.sqlserver-webapi
+#     container_name: poc.api.sqlserver-webapi
+#     restart: always
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     expose:
+#       - 5071
+#     ports:
+#       - 5071:5071
+#     links:
+#       - sqlserver
+#     networks:
+#       - app-network
+#     depends_on:
+#       - sqlserver
+
+#   # SQL Server
+#   sqlserver:
+#     image: mcr.microsoft.com/azure-sql-edge:latest
+#     cap_add: [ 'SYS_PTRACE' ]
+#     hostname: mssql
+#     container_name: sqlserver
+#     restart: always
+#     expose:
+#       - 1433
+#     ports:
+#       - 1433:1433
+#     environment:
+#       - ACCEPT_EULA=Y
+#       - SA_PASSWORD=@Poc2Minimal@Api
+#     networks:
+#       - app-network

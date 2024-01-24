@@ -1,0 +1,8 @@
+
+
+Add-Migration Inicial -Context SqlServerDb
+
+Update-Database -Context SqlServerDb
+
+docker-compose up --build
+
