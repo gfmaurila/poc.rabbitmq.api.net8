@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using poc.api.sqlserver.Configuration;
+using poc.api.sqlserver.dapper.Service.Producer;
 using poc.api.sqlserver.Model;
 using System.Data;
 
@@ -10,14 +11,15 @@ namespace poc.api.sqlserver.dapper.Service.Persistence;
 public class ProdutoService : IProdutoService
 {
     private readonly SqlServerDb _db;
+    private readonly IProdutoProducer _producer;
 
     private readonly string _connectionString;
 
-    public ProdutoService(SqlServerDb db, IConfiguration connectionString)
+    public ProdutoService(SqlServerDb db, IConfiguration connectionString, IProdutoProducer producer)
     {
         _db = db;
         _connectionString = connectionString.GetConnectionString("SqlConnection");
-
+        _producer = producer;
     }
 
     public async Task<List<Produto>> Get()
@@ -44,6 +46,8 @@ public class ProdutoService : IProdutoService
 
         var id = await db.QuerySingleAsync<int>(SQL_POST, entity);
         entity.Id = id;
+
+        _producer.Publish(entity);
 
         return entity;
     }

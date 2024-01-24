@@ -6,15 +6,15 @@ namespace poc.api.sqlserver.Configuration;
 public class SqlServerDb : DbContext
 {
     public SqlServerDb(DbContextOptions<SqlServerDb> op) : base(op)
-    {}
+    { }
 
     public DbSet<Produto> Produto { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         builder.Entity<Produto>().HasData(
-            new Produto 
-            { 
+            new Produto
+            {
                 Id = 1,
                 Nome = "Dell not",
                 Preco = 10000

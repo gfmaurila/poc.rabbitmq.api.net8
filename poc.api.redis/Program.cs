@@ -1,6 +1,7 @@
 using poc.api.redis.Configuration;
 using poc.api.redis.EndPoints;
-using poc.api.redis.Service;
+using poc.api.redis.Service.Consumers;
+using poc.api.redis.Service.Persistence;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,9 @@ builder.Services.AddSwaggerConfig(builder.Configuration);
 // Redis
 string redisConfiguration = builder.Configuration.GetSection("Redis:Configuration").Value;
 builder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(redisConfiguration));
+
+// Bus
+builder.Services.AddHostedService<ProdutoConsumer>();
 
 // Repository
 builder.Services.AddScoped<IProdutoService, ProdutoService>();

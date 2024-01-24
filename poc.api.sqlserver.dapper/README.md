@@ -22,7 +22,7 @@ Para executar este projeto, você precisará:
 Clone o repositório usando: https://github.com/gfmaurila/poc.api.sqlserver.dapper.net8
 
 ### Configurando o Docker e Docker Compose
-docker-compose up --build
+docker-compose up --buildcd
 http://localhost:5072/swagger/index.html
 
 ### SQL Server

@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 using poc.api.redis.Model;
-using poc.api.redis.Service;
+using poc.api.redis.Service.Persistence;
 
 namespace poc.api.redis.EndPoints;
 public static class ProdutosEndpoints

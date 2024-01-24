@@ -1,11 +1,9 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using poc.api.sqlserver.Configuration;
-using poc.api.sqlserver.dapper.Service.Consumers;
 using poc.api.sqlserver.dapper.Service.MessageBus;
 using poc.api.sqlserver.dapper.Service.Persistence;
 using poc.api.sqlserver.dapper.Service.Producer;
-using poc.api.sqlserver.dapper.Service.Redis;
 using poc.api.sqlserver.EndPoints;
 using System.Data;
 
@@ -28,8 +26,6 @@ builder.Services.AddScoped<IProdutoService, ProdutoService>();
 // Bus
 builder.Services.AddScoped<IMessageBusService, MessageBusService>();
 builder.Services.AddScoped<IProdutoProducer, ProdutoProducer>();
-builder.Services.AddHostedService<ProdutoConsumer>();
-builder.Services.AddScoped<IProdutoRedisService, ProdutoRedisService>();
 
 var app = builder.Build();
 
