@@ -4,5 +4,6 @@ namespace poc.api.sqlserver.dapper.Service.Redis;
 
 public interface IProdutoRedisService
 {
-    Task EnviarProdutoRedisAsync(Produto model);
+    Task PostAsync(Produto model);
+    Task PutAsync(Produto model);
 }

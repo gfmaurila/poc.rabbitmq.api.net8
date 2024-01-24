@@ -43,19 +43,33 @@ public class ProdutoConsumer : BackgroundService
             var modelBytes = eventArgs.Body.ToArray();
             var modelJson = Encoding.UTF8.GetString(modelBytes);
             var model = JsonSerializer.Deserialize<Produto>(modelJson);
-            await EnviarProdutoRedis(model);
+
+            if(model.Id != 0)
+                await PutAsync(model);
+
+            await PostAsync(model);
+
             _channel.BasicAck(eventArgs.DeliveryTag, false);
         };
         _channel.BasicConsume(QUEUE_NAME, false, consumer);
         return Task.CompletedTask;
     }
 
-    public async Task EnviarProdutoRedis(Produto model)
+    public async Task PostAsync(Produto model)
     {
         using (var scope = _serviceProvider.CreateScope())
         {
             var sendGridService = scope.ServiceProvider.GetRequiredService<IProdutoRedisService>();
-            await sendGridService.EnviarProdutoRedisAsync(model);
+            await sendGridService.PostAsync(model);
+        }
+    }
+
+    public async Task PutAsync(Produto model)
+    {
+        using (var scope = _serviceProvider.CreateScope())
+        {
+            var sendGridService = scope.ServiceProvider.GetRequiredService<IProdutoRedisService>();
+            await sendGridService.PutAsync(model);
         }
     }
 }

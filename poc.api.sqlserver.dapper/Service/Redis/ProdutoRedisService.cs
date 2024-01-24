@@ -32,12 +32,36 @@ public class ProdutoRedisService : IProdutoRedisService
             );
     }
 
-    public async Task EnviarProdutoRedisAsync(Produto model)
+    public async Task PostAsync(Produto model)
     {
         await _retryPolicy.ExecuteAsync(async () =>
         {
             var response = await _httpClient.PostAsJsonAsync(
-                _configuration["ProdutosRedis:URL"],
+                _configuration["ProdutosRedis:URL"]+ "/api/produto",
+                new Produto
+                {
+                    Nome = model.Nome,
+                    Preco = model.Preco
+                }
+            );
+            response.EnsureSuccessStatusCode();
+
+            if (response.StatusCode != HttpStatusCode.OK && response.StatusCode != HttpStatusCode.Accepted)
+            {
+                var error = await response.Content.ReadAsStringAsync();
+                _logger.LogError($"Falha ao enviar produto: {error}");
+            }
+
+            return response;
+        });
+    }
+
+    public async Task PutAsync(Produto model)
+    {
+        await _retryPolicy.ExecuteAsync(async () =>
+        {
+            var response = await _httpClient.PostAsJsonAsync(
+                _configuration["ProdutosRedis:URL"] + "/api/produto",
                 new Produto
                 {
                     Id = model.Id,
