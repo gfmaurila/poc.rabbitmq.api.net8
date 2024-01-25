@@ -1,6 +1,6 @@
-﻿using poc.api.sqlserver.Model;
+﻿using poc.api.redis.Model;
 
-namespace poc.api.sqlserver.Service;
+namespace poc.api.redis.Service.Persistence;
 
 public interface IProdutoService
 {

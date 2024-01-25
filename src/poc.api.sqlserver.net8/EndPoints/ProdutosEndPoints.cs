@@ -1,6 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 using poc.api.sqlserver.Model;
-using poc.api.sqlserver.Service;
+using poc.api.sqlserver.Service.Persistence;
 
 namespace poc.api.sqlserver.EndPoints;
 public static class ProdutosEndpoints

@@ -2,7 +2,7 @@
 using poc.api.redis.Model;
 using StackExchange.Redis;
 
-namespace poc.api.redis.Service;
+namespace poc.api.redis.Service.Persistence;
 
 public class ProdutoService : IProdutoService
 {
@@ -53,11 +53,7 @@ public class ProdutoService : IProdutoService
         if (entity is null)
             throw new ArgumentNullException(nameof(entity));
 
-        var novoId = await _db.StringIncrementAsync("produto:contador");
-
-        entity.Id = Convert.ToInt32(novoId);
-
-        var key = $"produto:{novoId}";
+        var key = $"produto:{entity.Id}";
         var value = JsonConvert.SerializeObject(entity);
 
         bool setSucess = await _db.StringSetAsync(key, value);

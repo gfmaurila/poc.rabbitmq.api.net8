@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using poc.api.sqlserver.Configuration;
 using poc.api.sqlserver.EndPoints;
-using poc.api.sqlserver.Service;
+using poc.api.sqlserver.Service.MessageBus;
+using poc.api.sqlserver.Service.Persistence;
+using poc.api.sqlserver.Service.Producer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,12 @@ builder.Services.AddDbContext<SqlServerDb>(op => op.UseSqlServer(builder.Configu
 
 // Service 
 builder.Services.AddScoped<IProdutoService, ProdutoService>();
+
+// Bus
+builder.Services.AddScoped<IMessageBusService, MessageBusService>();
+builder.Services.AddScoped<ICriarProdutoProducer, CriarProdutoProducer>();
+builder.Services.AddScoped<IAlterarProdutoProducer, AlterarProdutoProducer>();
+builder.Services.AddScoped<IRemoverProdutoProducer, RemoverProdutoProducer>();
 
 var app = builder.Build();
 

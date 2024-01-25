@@ -15,6 +15,7 @@
     <PackageReference Include="Microsoft.AspNetCore.openApi" Version="8.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.4" />
     <PackageReference Include="Newtonsoft.json" Version="13.0.3" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
     <PackageReference Include="StackExchange.Redis" Version="2.7.4" />
     <PackageReference Include="StackExchange.Redis.Extensions" Version="1.0.1" />
     <PackageReference Include="Swashbuckle.aspnetcore" Version="6.5.0" />
