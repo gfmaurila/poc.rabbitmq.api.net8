@@ -37,6 +37,13 @@ Instruções para configuração inicial do banco de dados SQL Server.
 ## Utilização
 Descreva como usar a API, incluindo rotas e exemplos de requisições.
 
+- GET ALL
+```
+curl -X 'GET' \
+  'http://localhost:5071/api/produto' \
+  -H 'accept: */*'
+```
+
 ## Youtube
 https://www.youtube.com/watch?v=v-_yNDviInQ
 
