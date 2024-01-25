@@ -4,7 +4,7 @@
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
-    <ProjectGuid>13f87ebf-5344-4203-bce5-422ddab4095b</ProjectGuid>
+    <ProjectGuid>b70e4f44-bd0a-4b83-be43-d563acc004a1</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
     <DockerServiceName>poc.api.redis</DockerServiceName>

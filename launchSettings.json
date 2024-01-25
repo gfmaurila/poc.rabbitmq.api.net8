@@ -4,8 +4,7 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "poc.api.redis": "StartDebugging",
-        "poc.api.sqlserver.dapper": "StartDebugging"
+        "poc.api.redis": "StartDebugging"
       }
     }
   }

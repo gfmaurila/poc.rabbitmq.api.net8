@@ -1,27 +1,21 @@
-version: '3.4'
+version: '3.9'
 
 services:
-  poc.api.redis:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_ENVIRONMENT=Docker
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=5074
+
+  poc.api.sqlserver-webapi:
     ports:
-      - "8080"
-      - "5074"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-  poc.api.sqlserver.dapper:
+      - 5071:5071
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_ENVIRONMENT=Docker
-      - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=5071
-    ports:
-      - "8080"
-      - "5071"
     volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+
+  poc.api.redis-webapi:
+    ports:
+      - 5074:5074
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    volumes:
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
