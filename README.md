@@ -26,15 +26,15 @@ Para rodar este projeto, é necessário ter instalado:
 - MongoDB
 - Docker Compose
 
-## Configuração e Instalação - Wike
+## Configuração e Instalação - wiki
 - https://github.com/gfmaurila/poc.rabbitmq.api.net8/wiki/Rodando-projeto
 
 
-#### API SQL Server - Docker - Wike
+#### API SQL Server - Docker - wiki
 
 - https://github.com/gfmaurila/poc.rabbitmq.api.net8/wiki/API-SQL-Server-%E2%80%90-Docker
 
-#### API Redis - Docker - Wike
+#### API Redis - Docker - wiki
 - https://github.com/gfmaurila/poc.rabbitmq.api.net8/wiki/API-Redis-%E2%80%90-Docker
 
 ## Youtube
