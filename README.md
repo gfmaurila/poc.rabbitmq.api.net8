@@ -37,10 +37,51 @@ Instruções para configuração inicial do banco de dados SQL Server.
 ## Utilização
 Descreva como usar a API, incluindo rotas e exemplos de requisições.
 
+- API SQL Server - Docker
 - GET ALL
 ```
 curl -X 'GET' \
   'http://localhost:5071/api/produto' \
+  -H 'accept: */*'
+```
+
+- POST
+```
+curl -X 'POST' \
+  'http://localhost:5071/api/produto' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": 0,
+  "nome": "string",
+  "preco": 0
+}'
+```
+
+- PUT
+```
+curl -X 'PUT' \
+  'http://localhost:5071/api/produto' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": 0,
+  "nome": "string",
+  "preco": 0
+}'
+```
+
+- GET BY ID
+```
+curl -X 'GET' \
+  'http://localhost:5071/api/produto/1' \
+  -H 'accept: */*'
+```
+
+- DELETE BY ID
+```
+curl -X 'DELETE' \
+  'http://localhost:5071/api/produto/1' \
   -H 'accept: */*'
 ```
 
