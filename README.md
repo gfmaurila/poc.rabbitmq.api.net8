@@ -85,6 +85,54 @@ curl -X 'DELETE' \
   -H 'accept: */*'
 ```
 
+#### API Redis - Docker
+- GET ALL
+```
+curl -X 'GET' \
+  'http://localhost:5074/api/produto' \
+  -H 'accept: */*'
+```
+
+- POST
+```
+curl -X 'POST' \
+  'http://localhost:5074/api/produto' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": 0,
+  "nome": "string",
+  "preco": 0
+}'
+```
+
+- PUT
+```
+curl -X 'PUT' \
+  'http://localhost:5074/api/produto' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "id": 0,
+  "nome": "string",
+  "preco": 0
+}'
+```
+
+- GET BY ID
+```
+curl -X 'GET' \
+  'http://localhost:5074/api/produto/1' \
+  -H 'accept: */*'
+```
+
+- DELETE BY ID
+```
+curl -X 'DELETE' \
+  'http://localhost:5074/api/produto/1' \
+  -H 'accept: */*'
+```
+
 ## Youtube
 https://www.youtube.com/watch?v=v-_yNDviInQ
 
