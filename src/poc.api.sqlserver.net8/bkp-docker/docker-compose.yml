@@ -1,0 +1,96 @@
+# version: '3.9'
+
+# networks:
+#   app-network:
+#     driver: bridge
+
+# services:
+
+#   poc.api.sqlserver-webapi:
+#     image: ${DOCKER_REGISTRY-}poc.api.sqlserver-webapi
+#     container_name: poc.api.sqlserver-webapi
+#     restart: always
+#     build:
+#       context: .
+#       dockerfile: src/poc.api.sqlserver.net8/Dockerfile
+#     expose:
+#       - 5071
+#     ports:
+#       - 5071:5071
+#     links:
+#       - sqlserver
+#       - rabbitmq
+#     networks:
+#       - app-network
+#     depends_on:
+#       - sqlserver
+#       - rabbitmq 
+
+#   poc.api.redis-webapi:
+#     image: ${DOCKER_REGISTRY-}poc.api.redis-webapi
+#     container_name: poc.api.redis-webapi
+#     restart: always
+#     build:
+#       context: .
+#       dockerfile: src/poc.api.redis.net8/Dockerfile
+#     expose:
+#       - 5074
+#     ports:
+#       - 5074:5074
+#     links:
+#       - redis
+#       - rabbitmq 
+#     networks:
+#       - app-network
+#     depends_on:
+#       - redis
+#       - rabbitmq 
+
+#   # SQL Server
+#   sqlserver:
+#     image: mcr.microsoft.com/azure-sql-edge:latest
+#     cap_add: [ 'SYS_PTRACE' ]
+#     hostname: mssql
+#     container_name: sqlserver
+#     restart: always
+#     expose:
+#       - 1433
+#     ports:
+#       - 1433:1433
+#     environment:
+#       - ACCEPT_EULA=Y
+#       - SA_PASSWORD=@Poc2Minimal@Api
+#     networks:
+#       - app-network
+      
+#   # Redis Cache Server
+#   redis:
+#     image: redis:latest
+#     container_name: redis
+#     command: redis-server --requirepass Poc2Minimal@Api
+#     restart: always
+#     expose:
+#       - 6379
+#     ports:
+#       - 6379:6379
+#     networks:
+#       - app-network
+
+#   # http://localhost:15672
+#   # usuário guest 
+#   # senha guest
+#   # Rabbit MQ
+#   rabbitmq:
+#     image: rabbitmq:3-management-alpine
+#     container_name: rabbitmq
+#     restart: always
+#     expose:
+#       - 15672
+#     ports:
+#         - 5672:5672
+#         - 15672:15672
+#     volumes:
+#         - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+#         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+#     networks:
+#         - app-network

@@ -26,4 +26,10 @@
     <PackageReference Include="Swashbuckle.aspnetcore" Version="6.5.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="bkp-docker\docker-compose.override.yml">
+      <DependentUpon>docker-compose.yml</DependentUpon>
+    </None>
+  </ItemGroup>
+
 </Project>
