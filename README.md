@@ -37,7 +37,24 @@ Instruções para configuração inicial do banco de dados SQL Server.
 ## Utilização
 Descreva como usar a API, incluindo rotas e exemplos de requisições.
 
+#### Criando Ambiente
+
+- Docker Compose
+```
+docker-compose up --build
+```
+
+- SQL Server
+```
+Add-Migration Inicial -Context SqlServerDb
+```
+
+```
+Update-Database -Context SqlServerDb
+```
+
 #### API SQL Server - Docker
+
 - GET ALL
 ```
 curl -X 'GET' \
