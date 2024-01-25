@@ -4,6 +4,7 @@ using poc.api.sqlserver.EndPoints;
 using poc.api.sqlserver.Service.MessageBus;
 using poc.api.sqlserver.Service.Persistence;
 using poc.api.sqlserver.Service.Producer;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,14 +25,17 @@ builder.Services.AddScoped<ICriarProdutoProducer, CriarProdutoProducer>();
 builder.Services.AddScoped<IAlterarProdutoProducer, AlterarProdutoProducer>();
 builder.Services.AddScoped<IRemoverProdutoProducer, RemoverProdutoProducer>();
 
+builder.Host.UseSerilog((context, config) =>
+{
+    config.ReadFrom.Configuration(builder.Configuration);
+});
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-// Configura middlewere
-app.UseStatusCodePages(async statusCodeContext => await Results.Problem(statusCode: statusCodeContext.HttpContext.Response.StatusCode).ExecuteAsync(statusCodeContext.HttpContext));
+app.UseSerilogRequestLogging();
 
-// EndPoints
 app.RegisterProdutosEndpoints();
 
 app.UseAuthorization();

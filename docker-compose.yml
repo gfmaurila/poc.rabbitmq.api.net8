@@ -20,11 +20,13 @@ services:
     links:
       - sqlserver
       - rabbitmq
+      - mongoserver
     networks:
       - app-network
     depends_on:
       - sqlserver
       - rabbitmq 
+      - mongoserver
 
   poc.api.redis-webapi:
     image: ${DOCKER_REGISTRY-}poc.api.redis-webapi
@@ -40,11 +42,13 @@ services:
     links:
       - redis
       - rabbitmq 
+      - mongoserver
     networks:
       - app-network
     depends_on:
       - redis
       - rabbitmq 
+      - mongoserver
 
   # SQL Server
   sqlserver:
@@ -73,6 +77,17 @@ services:
       - 6379
     ports:
       - 6379:6379
+    networks:
+      - app-network
+
+  mongoserver:
+    image: mongo:latest
+    container_name: mongoserver
+    restart: always
+    expose:
+      - 27017
+    ports:
+      - 27017:27017
     networks:
       - app-network
 

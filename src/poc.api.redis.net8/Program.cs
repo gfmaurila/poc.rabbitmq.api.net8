@@ -2,6 +2,7 @@ using poc.api.redis.Configuration;
 using poc.api.redis.EndPoints;
 using poc.api.redis.Service.Consumers;
 using poc.api.redis.Service.Persistence;
+using Serilog;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,20 +25,18 @@ builder.Services.AddHostedService<RemoverProdutoConsumer>();
 // Repository
 builder.Services.AddScoped<IProdutoService, ProdutoService>();
 
+builder.Host.UseSerilog((context, config) =>
+{
+    config.ReadFrom.Configuration(builder.Configuration);
+});
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
 
-// Configura middlewere
-app.UseStatusCodePages(async statusCodeContext => await Results.Problem(statusCode: statusCodeContext.HttpContext.Response.StatusCode).ExecuteAsync(statusCodeContext.HttpContext));
+app.UseSerilogRequestLogging();
 
-
-
-#region Conttroller
 app.RegisterProdutosEndpoints();
-#endregion
-
-
 
 app.UseAuthorization();
 

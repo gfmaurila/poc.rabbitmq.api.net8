@@ -13,14 +13,19 @@ public class RemoverProdutoConsumer : BackgroundService
     private readonly IModel _channel;
     private readonly IServiceProvider _serviceProvider;
     private const string QUEUE_NAME = "REMOVER_PRODUTO";
+    private readonly IConfiguration _configuration;
+    private readonly ILogger<RemoverProdutoConsumer> _logger;
 
-    public RemoverProdutoConsumer(IServiceProvider servicesProvider)
+    public RemoverProdutoConsumer(IServiceProvider servicesProvider, IConfiguration configuration, ILogger<RemoverProdutoConsumer> logger)
     {
         _serviceProvider = servicesProvider;
+        _configuration = configuration;
 
         var factory = new ConnectionFactory
         {
-            HostName = "localhost"
+            HostName = _configuration["RabbitMQConnection:Host"],
+            UserName = _configuration["RabbitMQConnection:Username"],
+            Password = _configuration["RabbitMQConnection:Password"]
         };
 
         _connection = factory.CreateConnection();
@@ -32,10 +37,12 @@ public class RemoverProdutoConsumer : BackgroundService
             exclusive: false,
             autoDelete: false,
             arguments: null);
+        _logger = logger;
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        _logger.LogInformation("Consumer > ExecuteAsync > Produto > REMOVER_PRODUTO > ExecuteAsync - Redis...");
         var consumer = new EventingBasicConsumer(_channel);
         consumer.Received += async (sender, eventArgs) =>
         {
@@ -45,6 +52,8 @@ public class RemoverProdutoConsumer : BackgroundService
 
             await DeleteAsync(model);
 
+            _logger.LogInformation($"Consumer > ExecuteAsync > Produto > REMOVER_PRODUTO > ExecuteAsync - Redis... {model}");
+
             _channel.BasicAck(eventArgs.DeliveryTag, false);
         };
         _channel.BasicConsume(QUEUE_NAME, false, consumer);
@@ -53,10 +62,12 @@ public class RemoverProdutoConsumer : BackgroundService
 
     public async Task DeleteAsync(Produto model)
     {
+        _logger.LogInformation("Consumer > ExecuteAsync > Produto > REMOVER_PRODUTO > DeleteAsync - Redis...");
         using (var scope = _serviceProvider.CreateScope())
         {
             var sendGridService = scope.ServiceProvider.GetRequiredService<IProdutoService>();
             await sendGridService.Delete(model.Id);
+            _logger.LogInformation($"Consumer > ExecuteAsync > Produto > REMOVER_PRODUTO > DeleteAsync - Redis... {model.Id}");
         }
     }
 }

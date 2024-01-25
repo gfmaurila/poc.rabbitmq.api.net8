@@ -13,14 +13,19 @@ public class CriarProdutoConsumer : BackgroundService
     private readonly IModel _channel;
     private readonly IServiceProvider _serviceProvider;
     private const string QUEUE_NAME = "CRIAR_PRODUTO";
+    private readonly IConfiguration _configuration;
+    private readonly ILogger<CriarProdutoConsumer> _logger;
 
-    public CriarProdutoConsumer(IServiceProvider servicesProvider)
+    public CriarProdutoConsumer(IServiceProvider servicesProvider, IConfiguration configuration, ILogger<CriarProdutoConsumer> logger)
     {
         _serviceProvider = servicesProvider;
+        _configuration = configuration;
 
         var factory = new ConnectionFactory
         {
-            HostName = "localhost"
+            HostName = _configuration["RabbitMQConnection:Host"],
+            UserName = _configuration["RabbitMQConnection:Username"],
+            Password = _configuration["RabbitMQConnection:Password"]
         };
 
         _connection = factory.CreateConnection();
@@ -32,10 +37,12 @@ public class CriarProdutoConsumer : BackgroundService
             exclusive: false,
             autoDelete: false,
             arguments: null);
+        _logger = logger;
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
+        _logger.LogInformation("Consumer > ExecuteAsync > Produto > CRIAR_PRODUTO > ExecuteAsync - Redis...");
         var consumer = new EventingBasicConsumer(_channel);
         consumer.Received += async (sender, eventArgs) =>
         {
@@ -44,7 +51,7 @@ public class CriarProdutoConsumer : BackgroundService
             var model = JsonSerializer.Deserialize<Produto>(modelJson);
 
             await PostAsync(model);
-
+            _logger.LogInformation($"Consumer > ExecuteAsync > Produto > CRIAR_PRODUTO > ExecuteAsync - Redis... {model}");
             _channel.BasicAck(eventArgs.DeliveryTag, false);
         };
         _channel.BasicConsume(QUEUE_NAME, false, consumer);
@@ -53,10 +60,12 @@ public class CriarProdutoConsumer : BackgroundService
 
     public async Task PostAsync(Produto model)
     {
+        _logger.LogInformation("Consumer > ExecuteAsync > Produto > CRIAR_PRODUTO > PostAsync - Redis...");
         using (var scope = _serviceProvider.CreateScope())
         {
             var sendGridService = scope.ServiceProvider.GetRequiredService<IProdutoService>();
             await sendGridService.Post(model);
+            _logger.LogInformation($"Consumer > ExecuteAsync > Produto > CRIAR_PRODUTO > PostAsync - Redis... {model}");
         }
     }
 }

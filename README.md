@@ -4,11 +4,15 @@
 ## Descrição
 Este projeto implementa uma API em .NET Core 8 para operações CRUD de cadastro de produtos, utilizando SQL Server. A API se destaca pela integração com RabbitMQ para o gerenciamento de filas e Redis para armazenamento de dados em cache, garantindo alta performance e eficiência. Tudo é orquestrado através do Docker Compose, assegurando uma implantação e escalabilidade simplificadas.
 
+Além disso, ambas as aplicações utilizam Serilog com MongoDB para o gerenciamento de logs, proporcionando um acompanhamento detalhado das operações e facilitando a manutenção.
+
 ## Tecnologias Utilizadas
 - .NET Core 8
 - SQL Server
 - RabbitMQ
 - Redis
+- MongoDB
+- Serilog
 - Docker
 - Docker Compose
 
@@ -19,12 +23,13 @@ Para rodar este projeto, é necessário ter instalado:
 - SQL Server
 - RabbitMQ
 - Redis
+- MongoDB
 - Docker Compose
 
 ## Configuração e Instalação
 
 ### Clonando o Repositório
-Clone o repositório usando: [Link do seu repositório GitHub]
+Clone o repositório usando: https://github.com/gfmaurila/poc.rabbitmq.api.net8.git
 
 ### Configurando o Docker e Docker Compose
 Execute o comando `docker-compose up --build` para inicializar os contêineres.
