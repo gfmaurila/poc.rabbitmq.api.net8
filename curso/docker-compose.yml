@@ -1,5 +1,5 @@
 version: '3.9'
-# docker-compose up --build
+
 networks:
   app-network:
     driver: bridge
@@ -49,10 +49,7 @@ services:
       - redis
       - rabbitmq 
       - mongoserver
-
-  # SQL Server
-  # Add-Migration Inicial -Context SqlServerDb
-  # Update-Database -Context SqlServerDb
+      
   sqlserver:
     image: mcr.microsoft.com/azure-sql-edge:latest
     cap_add: [ 'SYS_PTRACE' ]
@@ -69,7 +66,6 @@ services:
     networks:
       - app-network
       
-  # Redis Cache Server
   redis:
     image: redis:latest
     container_name: redis
@@ -93,10 +89,6 @@ services:
     networks:
       - app-network
 
-  # http://localhost:15672
-  # usuário guest 
-  # senha guest
-  # Rabbit MQ
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: rabbitmq

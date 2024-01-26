@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+
+  poc.api.sqlserver-webapi:
+    ports:
+      - 5071:5071
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    volumes:
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+
+  poc.api.redis-webapi:
+    ports:
+      - 5074:5074
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    volumes:
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro

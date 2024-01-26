@@ -18,7 +18,7 @@ public class CriarProdutoProducer : ICriarProdutoProducer
 
     public void Publish(Produto model)
     {
-        _logger.LogInformation($"Producer > Publish > Produto > CRIAR_PRODUTO > ExecuteAsync - SQL Server... {model}");
+        _logger.LogInformation($"Producer > Publish > Produto > CRIAR_PRODUTO > SQL Server...");
         var modelJson = JsonSerializer.Serialize(model);
         var modelBytes = Encoding.UTF8.GetBytes(modelJson);
         _messageBusService.Publish(QUEUE_NAME, modelBytes);
