@@ -38,7 +38,7 @@ Para rodar este projeto, é necessário ter instalado:
 - https://github.com/gfmaurila/poc.rabbitmq.api.net8/wiki/API-Redis-%E2%80%90-Docker
 
 ## Youtube
-https://www.youtube.com/watch?v=v-_yNDviInQ
+https://youtu.be/cg6gx02iWnw
 
 ## Autor
 
